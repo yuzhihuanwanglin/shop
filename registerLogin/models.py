@@ -27,7 +27,7 @@ class UserInfo(models.Model):
 
 class AreaInfo(models.Model):
     aTitle = models.CharField(max_length=20)
-    aParent = models.ForeignKey('self', null=True, blank=True)
+    aParent = models.ForeignKey('self', null=True, blank=True,on_delete=models.CASCADE)
 
     class Meta():
         db_table = 'areainfo'
@@ -50,7 +50,7 @@ class AddrInfo(models.Model):
     isDelete = models.BooleanField(default=False)
     aDefaultAddr = models.BooleanField(default=False)  # 默认地址
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
-    aUser = models.ForeignKey('UserInfo')
+    aUser = models.ForeignKey('UserInfo',on_delete=models.CASCADE)
 
     class Meta():
         db_table = 'addrinfo'
@@ -82,7 +82,7 @@ class Goods(models.Model):
     goodsDetail = HTMLField()
     imgPath = models.ImageField(upload_to='uploads/')
     saleCount = models.IntegerField(default=0)
-    goodSort = models.ForeignKey('GoodSort')
+    goodSort = models.ForeignKey('GoodSort',on_delete=models.CASCADE)
     gPubdate=models.DateTimeField()
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
 
@@ -99,7 +99,7 @@ class GoodsComment(models.Model):
     userName = models.CharField(max_length=30)
     commentDate = models.DateTimeField()
     comment = HTMLField()
-    goods = models.ForeignKey('Goods')
+    goods = models.ForeignKey('Goods',on_delete=models.CASCADE)
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
 
     class Meta():
@@ -115,7 +115,7 @@ class Cart(models.Model):
     goodsName = models.CharField(max_length=30)
     buyCount = models.IntegerField(default=1)
     isDelete = models.BooleanField(default=False)
-    userCart = models.ForeignKey('UserInfo')
+    userCart = models.ForeignKey('UserInfo',on_delete=models.CASCADE)
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
 
     class Meta():
@@ -133,7 +133,7 @@ class Orders(models.Model):
     isDelete = models.BooleanField(default=False)
     orderTime = models.DateTimeField()
     orderNumber = models.CharField(max_length=20,null=True,blank=True) #预留
-    userOrder = models.ForeignKey('UserInfo')
+    userOrder = models.ForeignKey('UserInfo',on_delete=models.CASCADE)
 
     class Meta():
         db_table = 'orders'
@@ -145,8 +145,8 @@ class OrderDetail(models.Model):
     goodsName = models.CharField(max_length=30)
     goodsPrice = models.DecimalField(max_digits=7, decimal_places=2)
     buyCount = models.IntegerField()
-    orders_id = models.ForeignKey('Orders')
-    good_id = models.ForeignKey('Goods')
+    orders_id = models.ForeignKey('Orders',on_delete=models.CASCADE)
+    good_id = models.ForeignKey('Goods',on_delete=models.CASCADE)
 
     class Meta():
         db_table = 'orderdetail'
@@ -158,7 +158,7 @@ class OrderDetail(models.Model):
 class RecentSee(models.Model):
     goodsName=models.CharField(max_length=30)
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
-    user=models.ForeignKey('UserInfo')
+    user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)
     class Meta():
         db_table='recentsee'
     def __str__(self):

@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.http import *
-from models import *
+from cart.models import *
 from django.db.models import *
 from datetime import datetime
 import time

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from cart.models import *
 
 class GoodsAdmin(admin.ModelAdmin):
 	list_display = ["id","goodsName","goodsPrice","imgPath"]

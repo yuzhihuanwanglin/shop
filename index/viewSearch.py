@@ -1,6 +1,6 @@
 # coding=utf-8
 from haystack.generic_views import SearchView
-from models import *
+from index.models import *
 from django.http import *
 from django.shortcuts import render
 

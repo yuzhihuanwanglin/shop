@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
+    'myapp',
     'registerLogin',
     'usercenter',
     'goodslist',
@@ -84,12 +85,14 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shopping',
-        'HOST':'localhost',
-        'PORT':'3306',
-        'USER':'root',
-        'PASSWORD':'mysql',
+       # 'ENGINE': 'django.db.backends.mysql',
+       # 'NAME': 'shopping',
+       # 'HOST':'127.0.0.1',
+       # 'PORT':'3306',
+       # 'USER':'root',
+       # 'PASSWORD':'mysql',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -116,7 +119,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,"static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT='/var/www/shop/static/'
+STATIC_ROOT='/Users/rothschild/static/'
 STATIC_URL='/static/'
 
 

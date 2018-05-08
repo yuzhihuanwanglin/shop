@@ -1,5 +1,5 @@
 from django.shortcuts import *
-from models import *
+from usercenter.models import *
 
 def login_name(fn):
     def fun(request, *args):
@@ -8,8 +8,8 @@ def login_name(fn):
         user=''
 
         if username:
-			user=UserInfo.objects.get(uName=username)
-			number=user.cart_set.filter(isDelete=False).count()
+            user=UserInfo.objects.get(uName=username)
+            number=user.cart_set.filter(isDelete=False).count()
         dic = {
             'user': user,
             'number':number,

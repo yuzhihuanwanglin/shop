@@ -3,7 +3,8 @@ from django.http import *
 # 引入绘图模块
 from PIL import Image, ImageDraw, ImageFont
 import random
-import cStringIO
+#import cStringIO
+from io import StringIO
 
 def verifycode(request):
 	# 定义一个变量用于画布打背景色和宽高
@@ -40,8 +41,8 @@ def verifycode(request):
 	# 存入session用于做进一步验证
 	request.session['verifycode']=rand_str
 	# 内存文件操作
-	buf=cStringIO
-	buf=cStringIO.StringIO()
+	buf=StringIO
+	#buf=cStringIO.StringIO()
 	# 将图片保存在内存中，文件类型为png
 	im.save(buf,'png')
 	# 将内存中的图片数据返回给客户端，ＭＩＭＥ类型为图片png

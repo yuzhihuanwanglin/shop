@@ -2,7 +2,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.http import *
-from models import *
+from registerLogin.models import *
 from datetime import datetime
 from usercenter import der
 import hashlib
@@ -15,8 +15,9 @@ def index(request):
 	return render(request, 'freshFruit/index.html')
 
 def register(request):
+	print('register called %s',request)
 	if request.method == 'GET':
-		return render(request, 'freshFruit/register.html')
+		return render(request, 'freshFruit/base.html')
 	elif request.method == 'POST':
 		user_name = request.POST.get('user_name', None)
 		password = request.POST.get('pwd', None)
@@ -25,7 +26,7 @@ def register(request):
 			try:
 				if UserInfo.objects.get(uName=user_name):
 					pass
-			except Exception, e:
+			except Exception:
 				user = UserInfo()
 				user.uName = user_name
 				n=hashlib.md5()
@@ -34,10 +35,10 @@ def register(request):
 				user.uEmail = email
 				user.uRegDate = datetime.now()
 				user.save()
-				print '写入完成'
+				print('写入完成')
 				return HttpResponseRedirect('/login/')
 			else:
-				print 'user has exis:不允许注册'
+				print('user has exis:不允许注册')
 				return render(request, 'freshFruit/register.html')
 			finally:
 				pass
@@ -49,11 +50,11 @@ def regcheck(request):
 		try:
 			if UserInfo.objects.get(uName=name):
 				pass
-		except Exception, e:
-			print 'exception:注册用户不存在可以注册'
+		except Exception:
+			print ('exception:注册用户不存在可以注册')
 			return JsonResponse({'find': 'False'})
 		else:
-			print 'user has exis:不允许注册'
+			print ('user has exis:不允许注册')
 			return JsonResponse({'find': 'True'})
 		finally:
 			pass
@@ -79,15 +80,15 @@ def login(request,dic):
 				n.update(password)
 				if user.uPassword==n.hexdigest():
 					if request.POST.get('check', None) == 'on':
-						request.session['name'] = name   
+						request.session['name'] = name
 						# request.session['password'] = password    #状态保持
-					else:	
+					else:
 						request.session['name'] = name
 						request.session.set_expiry(0)    #超时测试
-					return HttpResponseRedirect('/index/') 
+					return HttpResponseRedirect('/index/')
 				else:
 					return render(request, 'freshFruit/login.html',{'error':{'password':'密码输入有误，请重新输入'}})
-			except Exception, e:
+			except Exception:
 				return render(request, 'freshFruit/login.html',{'error':{'name':'用户名不存在，请重新输入'}})
 			else:
 				pass
